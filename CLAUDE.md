@@ -50,11 +50,11 @@ profiles/
 |-----|-------|
 | MVP0 | Product vision and domain model |
 | MVP1 | Canonical Asset Record specification |
-| MVP2 | StockForge / iStock profile (first business case) |
+| MVP2 | StockForge / Adobe Stock profile (first business case) |
 | MVP3 | General description and keyword profiles |
 | MVP4 | Human review UI, versioning, audit trail |
 | MVP5 | Local folder and batch workflows |
-| MVP6 | Additional stock profiles (Shutterstock, Adobe Stock, Dreamstime) |
+| MVP6 | Additional stock profiles (Shutterstock, iStock, Dreamstime) |
 | MVP7 | Social and portfolio profiles |
 | MVP8 | DAM and archive profiles |
 | MVP9 | Video and vector workflows |
