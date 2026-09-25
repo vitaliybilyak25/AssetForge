@@ -56,14 +56,15 @@ profiles/
 | MVP5 | Local folder and batch workflows |
 | MVP6 | Additional stock profiles (Shutterstock, iStock, Dreamstime) |
 | MVP7 | Social and portfolio profiles |
-| MVP8 | DAM and archive profiles |
-| MVP9 | Video and vector workflows |
-| MVP10 | Agile development agent team |
-| MVP11 | Enterprise deployment (auth, governance, observability, cost controls) |
+| MVP8 | CommerceForge — E-commerce and marketplace profiles |
+| MVP9 | DAM and archive profiles |
+| MVP10 | Video and vector workflows |
+| MVP11 | Agile development agent team |
+| MVP12 | Enterprise deployment (auth, governance, observability, cost controls) |
 
 ## Key Design Decisions
 
 - **Profile-driven, not hardcoded per-site** — a Content Profile is the central abstraction; adding a new channel means adding a new profile, not new code.
 - **Stock marketplaces are the first use case, not the scope** — every architectural decision should support eventual expansion to all channel types.
 - **Planned output formats:** CSV, JSON, IPTC/XMP, REST API, CMS integration, filesystem export.
-- **Enterprise target:** MVP11 plans Gemini Enterprise Agent Platform deployment with secret management, governance, and observability.
+- **Enterprise target:** MVP12 plans Gemini Enterprise Agent Platform deployment with secret management, governance, and observability.

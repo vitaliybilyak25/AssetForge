@@ -55,7 +55,7 @@ profiles/
 
 **Planned output formats:** CSV, JSON, IPTC/XMP, REST API, CMS integration, filesystem export.
 
-**MVP Roadmap reference:** MVP0 (domain model) → MVP1 (Canonical Asset Record spec) → MVP2 (Adobe Stock profile) → MVP3 (general profiles) → MVP4 (human review UI) → … → MVP11 (enterprise deployment).
+**MVP Roadmap reference:** MVP0 (domain model) → MVP1 (Canonical Asset Record spec) → MVP2 (Adobe Stock profile) → MVP3 (general profiles) → MVP4 (human review UI) → MVP5 (batch workflows) → MVP6 (more stock profiles) → MVP7 (social/portfolio) → MVP8 (CommerceForge) → MVP9 (DAM/archive) → MVP10 (video/vector) → MVP11 (agile agent team) → MVP12 (enterprise deployment).
 
 ## Analytical Methodology
 

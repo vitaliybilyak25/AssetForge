@@ -91,10 +91,11 @@ CSV · JSON · IPTC/XMP · REST API · CMS integration · Filesystem export
 | MVP5 | Local folder and batch workflows |
 | MVP6 | Additional stock profiles (Shutterstock, iStock, Dreamstime, Depositphotos, Alamy, Pond5, Pixta) |
 | MVP7 | Social and portfolio profiles |
-| MVP8 | DAM and archive profiles |
-| MVP9 | Video and vector workflows |
-| MVP10 | Agile development agent team |
-| MVP11 | Enterprise deployment (Gemini Enterprise, auth, governance, observability, cost controls) |
+| MVP8 | CommerceForge — E-commerce and marketplace profiles |
+| MVP9 | DAM and archive profiles |
+| MVP10 | Video and vector workflows |
+| MVP11 | Agile development agent team |
+| MVP12 | Enterprise deployment (Gemini Enterprise, auth, governance, observability, cost controls) |
 
 ---
 
