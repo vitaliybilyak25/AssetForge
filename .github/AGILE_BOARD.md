@@ -31,6 +31,7 @@ An issue is `ready` only when all of these are true:
 - [ ] In scope and out of scope listed
 - [ ] Testable acceptance criteria
 - [ ] Dependencies and risks named
+- [ ] Epic link present on the issue (parent field or body reference)
 - [ ] PO (human) approved the cut
 
 ## Handoff
