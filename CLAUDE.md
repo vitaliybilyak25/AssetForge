@@ -72,3 +72,4 @@ profiles/
 ## Reference
 
 - [Domain Glossary](docs/glossary.md) — canonical definitions for all AssetForge domain terms; must be consulted before authoring stories, profiles, or implementation code.
+- [Design Principles and Naming Conventions](docs/design-principles.md) — agreed principles and naming rules for all AssetForge contributors.
