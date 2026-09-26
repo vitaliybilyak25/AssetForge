@@ -68,3 +68,7 @@ profiles/
 - **Stock marketplaces are the first use case, not the scope** — every architectural decision should support eventual expansion to all channel types.
 - **Planned output formats:** CSV, JSON, IPTC/XMP, REST API, CMS integration, filesystem export.
 - **Enterprise target:** MVP12 plans Gemini Enterprise Agent Platform deployment with secret management, governance, and observability.
+
+## Reference
+
+- [Domain Glossary](docs/glossary.md) — canonical definitions for all AssetForge domain terms; must be consulted before authoring stories, profiles, or implementation code.
