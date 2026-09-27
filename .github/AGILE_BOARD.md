@@ -34,10 +34,24 @@ An issue is `ready` only when all of these are true:
 - [ ] Epic link present on the issue (parent field or body reference)
 - [ ] PO (human) approved the cut
 
+## Board status rules
+
+When an issue receives the `ready` label, the Scrum Master or Product Owner agent **must** immediately set its board **Status** to `Ready`. Do not leave `ready`-labelled issues in `Backlog`.
+
+| Label state | Board Status |
+|---|---|
+| `needs-refinement` | Backlog |
+| `ready` | Ready |
+| In progress (picked up) | In Progress |
+| PO reviewing | In Review |
+| Accepted | Done |
+
+All sprint issues must be **assigned** to a team member when the sprint starts.
+
 ## Handoff
 
 ```
-BA or PO draft → you approve → label ready → assign developer or tester
+BA or PO draft → you approve → label ready + set Status Ready + assign → developer or tester picks up
 ```
 
 No agent assigns another agent without your trigger. No agent reorders the backlog or accepts a sprint.
