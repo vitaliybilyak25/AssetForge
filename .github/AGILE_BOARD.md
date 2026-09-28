@@ -32,6 +32,7 @@ An issue is `ready` only when all of these are true:
 - [ ] Testable acceptance criteria
 - [ ] Dependencies and risks named
 - [ ] Epic link present on the issue (parent field or body reference)
+- [ ] If the story contains a worked example against a named external schema or API, the example has been verified against the source
 - [ ] PO (human) approved the cut
 
 ## Board status rules

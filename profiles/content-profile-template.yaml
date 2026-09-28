@@ -1,0 +1,434 @@
+# =============================================================================
+# Content Profile Authoring Template
+# =============================================================================
+# HOW TO USE THIS FILE
+#   1. Copy this file to profiles/{category}/{profile-name}.yaml
+#      Example: profiles/stock/adobe-stock.yaml
+#   2. Fill in every field marked REQUIRED.
+#   3. Fill in OPTIONAL fields where they apply to your Distribution Destination.
+#      Remove optional fields that do not apply — do not leave them blank.
+#   4. Replace all <EXAMPLE: ...> placeholders with real values.
+#   5. Validate that your profile_id follows the category/profile-name format
+#      from docs/design-principles.md.
+#   6. Remove all comment lines before committing the final profile.
+#
+# SCHEMA REFERENCE
+#   Field definitions, types, allowed values, and shared-vs-channel-specific
+#   classification are fully documented in:
+#   profiles/content-profile-schema.md
+#
+# CONCEPT REFERENCE
+#   The ten configurable dimensions this template implements are defined in:
+#   docs/content-profile.md (story #16)
+#
+# DO NOT use this template to define the Adobe Stock profile.
+# That is a separate deliverable scoped to MVP2.
+# =============================================================================
+
+# --- Identity Fields (all REQUIRED, all Shared) ----------------------------
+
+schema_version: "0.1"
+# REQUIRED | Shared
+# Identifies the schema version this profile conforms to.
+# Do not change this value; it is set by the schema owner.
+# Example: "0.1"
+
+cross_reference: "docs/content-profile.md (story #16)"
+# REQUIRED | Shared
+# Links this profile back to the Content Profile concept document and story.
+# Keep this value exactly as shown — it must not change per profile.
+
+profile_id: "<EXAMPLE: stock/adobe-stock>"
+# REQUIRED | Shared
+# The canonical Profile Identifier in {category}/{profile-name} format.
+# Category must be one of: stock, marketing, web, commerce, library.
+# Both segments are lowercase and hyphen-separated.
+# Examples: stock/shutterstock  |  marketing/instagram  |  web/seo-page
+
+profile_name: "<EXAMPLE: Adobe Stock>"
+# REQUIRED | Shared
+# Human-readable display name shown in UI and reporting.
+# Example: "Adobe Stock"
+
+module: "<EXAMPLE: StockForge>"
+# REQUIRED | Shared
+# The AssetForge module this profile belongs to.
+# Must be one of: StockForge | SocialForge | PortfolioForge | CommerceForge | ArchiveForge
+
+description: "<EXAMPLE: Generates title, description, and keyword metadata for
+  submission to Adobe Stock's contributor portal for commercial and editorial
+  photo licensing.>"
+# REQUIRED | Shared
+# One or two sentences describing what this profile is for and which
+# Distribution Destination it targets.
+
+asset_types:
+  - "<EXAMPLE: photo>"
+  # - video       # uncomment if this profile supports video assets
+  # - vector      # uncomment if this profile supports vector assets
+# REQUIRED | Shared
+# List every Asset Type this profile processes.
+# Allowed values: photo | video | vector
+
+created: "<EXAMPLE: 2026-09-26>"
+# REQUIRED | Shared
+# Date this profile was first authored. ISO 8601 format: YYYY-MM-DD.
+
+last_updated: "<EXAMPLE: 2026-09-26>"
+# REQUIRED | Shared
+# Date of last modification. Update this on every change. ISO 8601 format.
+
+
+# =============================================================================
+# DIMENSION 1: AUDIENCE
+# Consumed by: Content Generation Layer (Layer 2)
+# Purpose: Defines who the generated content is written for.
+# =============================================================================
+
+audience:
+
+  primary: "<EXAMPLE: Stock marketplace buyers seeking commercial lifestyle imagery>"
+  # REQUIRED | Shared
+  # The primary human or system consumer of the generated content.
+  # This frames vocabulary, assumed knowledge, and content priorities.
+  # Examples:
+  #   stock:     "Stock marketplace buyers searching for commercial imagery"
+  #   social:    "Instagram followers browsing lifestyle content"
+  #   commerce:  "Online shoppers comparing product options"
+  #   library:   "Archivists and DAM administrators retrieving assets"
+
+  secondary: "<EXAMPLE: Search engine indexing algorithms>"
+  # OPTIONAL | Channel-specific
+  # A secondary audience when the destination serves more than one consumer type.
+  # Remove this field entirely if there is only one audience for this profile.
+
+  use_context: "<EXAMPLE: Keyword-driven search on a stock photography marketplace>"
+  # REQUIRED | Shared
+  # The context in which the audience encounters the generated content.
+  # Describes whether they are browsing, searching, purchasing, archiving, etc.
+  # Examples:
+  #   "Search-driven discovery on a stock marketplace"
+  #   "Scrolling an Instagram feed"
+  #   "Running a DAM search query by subject tag"
+
+
+# =============================================================================
+# DIMENSION 2: TONE
+# Consumed by: Content Generation Layer (Layer 2)
+# Purpose: Specifies the voice and register for all generated text.
+# =============================================================================
+
+tone:
+
+  register: "<EXAMPLE: factual>"
+  # REQUIRED | Shared
+  # The primary voice register for all generated text fields.
+  # Must be one of: factual | descriptive | conversational | aspirational | technical | formal
+  # Examples by channel type:
+  #   stock marketplace:   factual
+  #   lifestyle social:    aspirational
+  #   DAM / archive:       technical
+  #   editorial:           descriptive
+
+  style_notes: "<EXAMPLE: Use active voice and present tense. Do not use
+    superlatives or subjective quality judgements. Avoid first person.>"
+  # OPTIONAL | Channel-specific
+  # Additional instructions refining the register.
+  # Remove this field if the register value above is sufficient.
+  # Examples: "Use active voice.", "Limit sentence length to 20 words.",
+  #           "Write in third person.", "Avoid marketing language."
+
+
+# =============================================================================
+# DIMENSION 3: REQUIRED AND OPTIONAL FIELDS
+# Consumed by: Content Generation Layer (Layer 2)
+# Also governs Handoff 2 validity (all required fields must be present and
+# non-empty before Generated Content passes to the Channel Adaptation Layer).
+# Purpose: Defines which content fields must be generated and which are optional.
+# =============================================================================
+
+fields:
+  - name: "<EXAMPLE: title>"
+    # REQUIRED | Shared
+    # Canonical field name. Must be one of:
+    # title | description | keywords | caption | alt_text | headline | summary
+    required: true
+    # REQUIRED | Shared
+    # true  = field must be present and non-empty; absence invalidates the Output Package.
+    # false = field is produced only when the CAR contains sufficient information.
+    purpose: "<EXAMPLE: Primary searchable text field on the destination; highest SEO weight.>"
+    # OPTIONAL | Shared
+    # Explains why this field is required or optional for this destination.
+    # Not consumed by the Pipeline; used as authoring guidance only.
+
+  - name: "<EXAMPLE: description>"
+    required: true
+    purpose: "<EXAMPLE: Secondary search field; supports editorial context and longer-form discovery.>"
+
+  - name: "<EXAMPLE: keywords>"
+    required: true
+    purpose: "<EXAMPLE: Primary discoverability mechanism; destination indexes all submitted keywords.>"
+
+  - name: "<EXAMPLE: caption>"
+    required: false
+    purpose: "<EXAMPLE: Optional contextual note; relevant for editorial submissions only.>"
+  # Add or remove entries as required for the specific Distribution Destination.
+  # Remove any field entry that the destination does not support.
+
+
+# =============================================================================
+# DIMENSION 4: LENGTH LIMITS
+# Consumed by: Content Generation Layer (Layer 2)
+# Governs Handoff 2 validity condition 2.
+# Purpose: Specifies character or word count constraints per generated text field.
+# One entry per field listed in the fields dimension above.
+# =============================================================================
+
+length_limits:
+  - field: "<EXAMPLE: title>"
+    # REQUIRED | Shared
+    # Must match a name in fields[].name.
+    unit: "<EXAMPLE: characters>"
+    # REQUIRED | Shared
+    # One of: characters | words
+    min: 5
+    # OPTIONAL | Channel-specific
+    # Minimum count. Remove this key if the destination has no minimum.
+    max: 200
+    # REQUIRED | Shared
+    # Maximum count. Every text field must have a maximum.
+
+  - field: "<EXAMPLE: description>"
+    unit: "<EXAMPLE: characters>"
+    min: 10
+    max: 200
+
+  - field: "<EXAMPLE: keywords>"
+    unit: "<EXAMPLE: words>"
+    min: 25
+    max: 49
+  # Add one entry per field. If the destination has no minimum, remove the min key.
+
+
+# =============================================================================
+# DIMENSION 5: KEYWORD RULES
+# Consumed by: Content Generation Layer (Layer 2)
+# Governs Handoff 2 validity condition 3.
+# Purpose: Governs keyword list generation. Apply only when keywords is
+# included in the fields dimension above.
+# =============================================================================
+
+keyword_rules:
+
+  min_count: 25
+  # REQUIRED | Channel-specific
+  # Minimum number of keywords the generated list must contain.
+  # Example: 25
+
+  max_count: 49
+  # REQUIRED | Channel-specific
+  # Maximum number of keywords permitted. Must be >= min_count.
+  # Example: 49
+
+  formats_allowed:
+    - single_word
+    - phrase
+  # REQUIRED | Channel-specific
+  # Which keyword formats the destination accepts.
+  # Any combination of: single_word | phrase
+  # Example — single words only:
+  #   - single_word
+  # Example — phrases allowed:
+  #   - single_word
+  #   - phrase
+
+  capitalisation: "<EXAMPLE: lowercase>"
+  # REQUIRED | Channel-specific
+  # Case convention for all keywords.
+  # One of: lowercase | title_case | as_generated
+
+  separator: "<EXAMPLE: comma>"
+  # REQUIRED | Channel-specific
+  # Separator used between keywords when serialised.
+  # One of: comma | semicolon | newline
+
+  ordering: "<EXAMPLE: relevance_descending>"
+  # OPTIONAL | Channel-specific
+  # Whether keywords must be ordered in a specific way.
+  # Remove this field if the destination has no ordering requirement.
+  # One of: relevance_descending | alphabetical | none
+
+
+# =============================================================================
+# DIMENSION 6: FORBIDDEN CONTENT
+# Consumed by: Content Generation Layer (Layer 2)
+# Governs Handoff 2 validity condition 4.
+# Purpose: Subject matter, terms, or content types that must never appear
+# in any generated field for this profile.
+# This list is profile-specific — it does not represent a platform-wide block list.
+# =============================================================================
+
+forbidden_content:
+
+  terms:
+    - "<EXAMPLE: shutterstock>"
+    - "<EXAMPLE: getty>"
+    # OPTIONAL | Channel-specific
+    # Specific words or phrases that must not appear in any generated field.
+    # Use lowercase. Remove this block entirely if the profile has no term-level restrictions.
+
+  content_types:
+    - "<EXAMPLE: competitor brand names>"
+    - "<EXAMPLE: politically sensitive terms>"
+    - "<EXAMPLE: adult or explicit content references>"
+    # OPTIONAL | Channel-specific
+    # Categories of subject matter that must not appear in generated output.
+    # Remove this block entirely if the profile has no content-type restrictions.
+
+  rationale: "<EXAMPLE: Adobe Stock submission guidelines prohibit competitor
+    references and require politically neutral descriptions for commercial licensing.>"
+  # OPTIONAL | Shared
+  # A brief explanation of why these restrictions are in place.
+  # Not consumed by the Pipeline; used as authoring guidance only.
+  # Remove this field if you have no forbidden content.
+
+
+# =============================================================================
+# DIMENSION 7: LANGUAGE
+# Consumed by: Content Generation Layer (Layer 2)
+# Governs Handoff 2 validity condition 5.
+# Purpose: Specifies the language and locale for all generated text.
+# =============================================================================
+
+language:
+
+  primary: "<EXAMPLE: en-US>"
+  # REQUIRED | Shared
+  # Language and locale for all generated text fields.
+  # Use IETF BCP 47 language tags.
+  # Examples: en-US | en-GB | de-DE | fr-FR | es-ES | ja-JP | zh-CN
+
+  secondary:
+    - "<EXAMPLE: en-GB>"
+  # OPTIONAL | Channel-specific
+  # Additional locales if the destination requires multi-language output.
+  # Remove this block entirely for single-language destinations.
+  # Use IETF BCP 47 language tags.
+
+
+# =============================================================================
+# DIMENSION 8: OUTPUT FORMAT
+# Consumed by: Channel Adaptation Layer (Layer 3) ONLY.
+# This dimension has no effect on content generation.
+# Purpose: Specifies the technical delivery format for the Output Package.
+# =============================================================================
+
+output_format:
+
+  type: "<EXAMPLE: csv>"
+  # REQUIRED | Channel-specific
+  # The primary delivery format for the Output Package.
+  # One of: csv | json | iptc_xmp | rest_api | cms_integration | filesystem_export
+
+  notes: "<EXAMPLE: UTF-8 encoding, comma delimiter, header row required. Column
+    order is a Channel Adaptation Layer responsibility; see destination adapter spec.>"
+  # OPTIONAL | Channel-specific
+  # Additional formatting guidance for the Channel Adaptation Layer.
+  # This is NOT a content-generation instruction — it applies to structure and delivery only.
+  # Remove this field if no additional notes are needed.
+
+
+# =============================================================================
+# DIMENSION 9: VALIDATION RULES
+# Consumed by: Channel Adaptation Layer (Layer 3) ONLY.
+# Purpose: Automated checks the Output Package must pass before delivery.
+# Each rule targets a specific field or the full Output Package.
+# =============================================================================
+
+validation_rules:
+  - rule_id: "<EXAMPLE: title-required>"
+    # REQUIRED | Shared
+    # Short unique identifier for this rule within the profile.
+    # Lowercase hyphen-separated. Used in error reporting.
+    # Example: title-required | min-keyword-count | no-forbidden-terms
+    check: "<EXAMPLE: Title field is present and non-empty.>"
+    # REQUIRED | Shared
+    # Plain-language description of what this rule verifies.
+    field: "<EXAMPLE: title>"
+    # OPTIONAL | Shared
+    # The specific content field this rule applies to.
+    # One of: title | description | keywords | caption | alt_text | headline | summary
+    # Remove this key for package-level rules that apply to all fields.
+    condition: "<EXAMPLE: title != empty>"
+    # REQUIRED | Shared
+    # Machine-readable constraint expression that must be true for validation to pass.
+    # Examples:
+    #   "title != empty"
+    #   "title.length <= 200"
+    #   "keywords.count >= 25"
+    #   "keywords.count <= 49"
+    #   "all_fields contain_none_of forbidden_content.terms"
+
+  - rule_id: "<EXAMPLE: title-max-length>"
+    check: "<EXAMPLE: Title does not exceed 200 characters.>"
+    field: "<EXAMPLE: title>"
+    condition: "<EXAMPLE: title.length <= 200>"
+
+  - rule_id: "<EXAMPLE: description-required>"
+    check: "<EXAMPLE: Description field is present and non-empty.>"
+    field: "<EXAMPLE: description>"
+    condition: "<EXAMPLE: description != empty>"
+
+  - rule_id: "<EXAMPLE: min-keyword-count>"
+    check: "<EXAMPLE: Keyword list contains at least the minimum required number of keywords.>"
+    field: "<EXAMPLE: keywords>"
+    condition: "<EXAMPLE: keywords.count >= keyword_rules.min_count>"
+
+  - rule_id: "<EXAMPLE: max-keyword-count>"
+    check: "<EXAMPLE: Keyword list does not exceed the maximum permitted number of keywords.>"
+    field: "<EXAMPLE: keywords>"
+    condition: "<EXAMPLE: keywords.count <= keyword_rules.max_count>"
+
+  - rule_id: "<EXAMPLE: no-forbidden-terms>"
+    check: "<EXAMPLE: No forbidden terms appear in any generated field.>"
+    condition: "<EXAMPLE: all_fields contain_none_of forbidden_content.terms>"
+  # Add one entry per rule required by the Distribution Destination.
+
+
+# =============================================================================
+# DIMENSION 10: APPROVAL REQUIREMENTS
+# Consumed by: Content Generation Layer (Layer 2) to flag review status.
+# The flag is preserved through to the Output Package by Layer 3.
+# Purpose: Specifies whether Output Packages require human review before delivery.
+# =============================================================================
+
+approval_requirements:
+
+  human_review_required: false
+  # REQUIRED | Shared
+  # true  = every Output Package under this profile requires human review before delivery.
+  # false = Output Packages are delivery-ready immediately on passing all Validation Rules,
+  #         unless a conditional_trigger fires.
+
+  conditional_triggers:
+    - "<EXAMPLE: risk_flag: identifiable_person>"
+    - "<EXAMPLE: risk_flag: visible_brand_mark>"
+    # OPTIONAL | Channel-specific
+    # Conditions under which human review is required even when
+    # human_review_required is false.
+    # Each entry references a CAR Risk Flag category or a content attribute.
+    # Examples:
+    #   "risk_flag: identifiable_person"
+    #   "risk_flag: visible_brand_mark"
+    #   "risk_flag: adult_content"
+    #   "content: editorial_use"
+    # Remove this block if human_review_required is true (review is always required)
+    # or if no conditional triggers apply.
+
+  notes: "<EXAMPLE: Output Packages for assets with an identifiable person or a
+    visible brand mark require human review before submission, because model or
+    property releases must be confirmed prior to commercial licensing.>"
+  # OPTIONAL | Shared
+  # Plain-language explanation of the approval policy.
+  # Not consumed by the Pipeline; used as authoring guidance.
+  # Remove this field if notes are not needed.
