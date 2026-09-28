@@ -33,6 +33,7 @@ An issue is `ready` only when all of these are true:
 - [ ] Dependencies and risks named
 - [ ] Epic link present on the issue (parent field or body reference)
 - [ ] If the story contains a worked example against a named external schema or API, the example has been verified against the source
+- [ ] If the story involves field mapping across systems or formats, all open field-level decisions are resolved or explicitly deferred with a recorded rationale
 - [ ] PO (human) approved the cut
 
 ## Board status rules
