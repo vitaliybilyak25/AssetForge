@@ -6,11 +6,27 @@ Agents live in this repository under `.claude/agents/`. The Project is the board
 
 ## Project fields
 
-Project #3 has **Sprint** (iteration), **Status**, **Priority**, **Size**, and **Kind** (Epic/Story).
+Project #3 has **Sprint** (iteration), **Status**, **Priority**, **Story Points**, and **Kind** (Epic/Story).
 
 - Use **Sprint** as the sprint. Filter views with `@current` / `@next`.
 - Roll unfinished work to the next sprint from a view grouped by Sprint.
 - Do not invent a second sprint tracker.
+
+## Estimation
+
+Stories are estimated in **Fibonacci story points** using the `Story Points` field.
+
+| Points | Meaning |
+|--------|---------|
+| 1 | Trivial — single-field edit, near-zero uncertainty |
+| 2 | Small — straightforward spec, one section, no complex conditions |
+| 3 | Moderate — 3–5 fields, conditional logic, or cross-references |
+| 5 | Medium — 6–8 fields, multiple cross-references, example validation |
+| 8 | Large — full multi-section spec with integration dependencies |
+| 13 | Extra large — consider splitting before committing to a sprint |
+| 21 | Oversized — must be split before entering a sprint |
+
+Estimation is set during Sprint Planning. Stories must be estimated before moving to **Ready**.
 
 ## Labels
 

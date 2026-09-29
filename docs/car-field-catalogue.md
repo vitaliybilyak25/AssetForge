@@ -38,8 +38,10 @@ The identifiable physical things depicted in the asset. These fields record what
 | `objects.detected_subjects` | Array\<string\> | Required | — | List of identifiable objects, subjects, and physical elements detected in the image (e.g., "standing desk", "laptop", "potted plant", "window"). Each entry is a plain noun or noun phrase. An empty array is valid when no objects are detected. |
 | `objects.primary_subject` | string | Conditional | Present when the Asset Intelligence Layer can identify a single dominant subject with high confidence | The most visually prominent subject in the image; used by the Content Generation Layer to anchor title and description generation. |
 | `objects.scene_type` | string (enum) | Required | — | Broad compositional classification of the image content: `object_isolated`, `scene_with_context`, `abstract`, `pattern_texture`, or `multiple_subjects`. Enables downstream profile routing. |
-| `objects.colour_palette` | Array\<string\> | Conditional | Present when colour analysis produces a reliable result | Up to five dominant colour names or hex codes describing the image's colour composition; relevant for product and commerce channel descriptions. |
+| `objects.colour_palette` | Array\<string\> | Conditional | Present when colour analysis produces a reliable result | Up to five dominant plain colour names (e.g., "red", "navy blue", "forest green") describing the image's colour composition. Hex codes must not be used. Relevant for product and commerce channel descriptions. |
 | `objects.brand_objects_detected` | Array\<string\> | Conditional | Present when one or more branded consumer goods (distinct from logos — see Text and Logos category) are visible | List of consumer product categories or brand-adjacent objects detected (e.g., "laptop", "smartphone", "coffee cup with brand mark"). Does not include logo text; that is recorded in `text.detected_strings`. |
+| `objects.foreground_elements` | Array\<string\> | Optional | — | Primary subjects or objects in the foreground of the image, distinct from background scene elements. |
+| `objects.background_elements` | Array\<string\> | Optional | — | Scene elements or environmental context in the background of the image. |
 | `objects.confidence_score` | float (0–1) | Required | — | Confidence score for the Objects and Subjects category as a whole. See **story #84** for threshold values. |
 
 ---
@@ -82,11 +84,12 @@ Readable text strings and brand marks visible within the asset. Accuracy of text
 
 | Field Name | Type | Cardinality | Condition | Description |
 |---|---|---|---|---|
-| `text.strings_present` | boolean | Required | — | `true` if any readable text or brand mark is detectable in the image; `false` otherwise. Drives all conditional Text and Logos fields. |
+| `text.strings_present` | boolean | Required | — | `true` if any readable text string is detectable in the image; `false` otherwise. Drives conditional fields `text.detected_strings`, `text.watermark_present`, and `text.dominant_language`. Note: `text.logo_marks_detected` is independently conditional on brand mark detectability and may be present regardless of this field's value. |
 | `text.detected_strings` | Array\<string\> | Conditional | Present when `text.strings_present` is `true` | Array of verbatim text strings detected in the image (e.g., "OPEN", "Nikon", "Sale 50%"). Each entry is a distinct readable string as it appears visually; no OCR correction or normalisation is applied. |
 | `text.logo_marks_detected` | Array\<string\> | Conditional | Present when one or more brand mark or logo symbols are detectable, regardless of whether associated text is legible | Array of identified brand mark names or descriptions (e.g., "Nike swoosh", "Apple logo"). Where a brand mark is detected but not identified, the entry is `"unidentified_brand_mark"`. |
 | `text.watermark_present` | boolean | Conditional | Present when `text.strings_present` is `true` | `true` if a watermark (photographer credit, stock agency mark, or similar overlay text) is detected. Downstream channels typically require watermark-free assets; this flag enables routing logic. |
 | `text.dominant_language` | string (BCP 47) | Conditional | Present when detected text contains five or more words sufficient to determine a language | Language code for the dominant readable language detected in the image (e.g., `en`, `fr`, `zh`). Relevant for geographic and editorial classification. |
+| `text.bounding_boxes` | Array\<object\> | Optional | — | Approximate position descriptors for detected text strings and logo marks (e.g. top-left, centre, bottom-right); not pixel-precise coordinates. |
 | `text.confidence_score` | float (0–1) | Required | — | Confidence score for the Text and Logos category as a whole. See **story #84** for threshold values. |
 
 ---
@@ -135,7 +138,7 @@ Each category above includes its own `*.confidence_score` field (e.g., `objects.
 | `confidence.analysis_model_version` | string | Required | — | Identifier for the version of the Asset Intelligence Layer model or pipeline that produced this CAR (e.g., `"ail-v0.1"`). Enables reproducibility tracking and supports future re-processing when model versions are updated. |
 | `confidence.low_confidence_categories` | Array\<string\> | Conditional | Present when one or more categories have a score below the platform's minimum routing threshold (threshold value defined in story #84) | List of category names (e.g., `["locations", "activities"]`) for which confidence is below the routing threshold. Consumers must apply CAR Consumer Rule 2 to all fields within listed categories. |
 | `confidence.analysis_timestamp` | string (ISO 8601) | Required | — | Date and time at which the Asset Intelligence Layer completed the CAR and sealed it as immutable. Supports audit trail requirements planned for MVP4. |
-| `confidence.asset_quality_signal` | string (enum) | Conditional | Present when the Asset Intelligence Layer detects technical quality issues that may affect analysis accuracy | Classification of detected technical quality issues: `blur`, `low_resolution`, `poor_exposure`, `noise`, or `none`. Does not rate commercial or aesthetic quality; records only technical properties that may reduce detection confidence. |
+| `confidence.asset_quality_signal` | string (enum) | Required | — | Classification of detected technical quality issues: `blur`, `low_resolution`, `poor_exposure`, `noise`, or `none`. Value is `none` when no quality issues are detected. Does not rate commercial or aesthetic quality; records only technical properties that may reduce detection confidence. |
 
 ---
 
