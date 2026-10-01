@@ -41,9 +41,9 @@ cross_reference: "docs/content-profile.md (story #16)"
 profile_id: "<EXAMPLE: stock/adobe-stock>"
 # REQUIRED | Shared
 # The canonical Profile Identifier in {category}/{profile-name} format.
-# Category must be one of: stock, marketing, web, commerce, library.
+# Category must be one of: stock, marketing, web, commerce, library, general.
 # Both segments are lowercase and hyphen-separated.
-# Examples: stock/shutterstock  |  marketing/instagram  |  web/seo-page
+# Examples: stock/shutterstock  |  marketing/instagram  |  web/seo-page  |  general/short-description
 
 profile_name: "<EXAMPLE: Adobe Stock>"
 # REQUIRED | Shared
@@ -53,7 +53,7 @@ profile_name: "<EXAMPLE: Adobe Stock>"
 module: "<EXAMPLE: StockForge>"
 # REQUIRED | Shared
 # The AssetForge module this profile belongs to.
-# Must be one of: StockForge | SocialForge | PortfolioForge | CommerceForge | ArchiveForge
+# Must be one of: StockForge | SocialForge | PortfolioForge | CommerceForge | ArchiveForge | General
 
 description: "<EXAMPLE: Generates title, description, and keyword metadata for
   submission to Adobe Stock's contributor portal for commercial and editorial

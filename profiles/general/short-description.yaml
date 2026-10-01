@@ -1,0 +1,205 @@
+schema_version: "0.1"
+cross_reference: "docs/content-profile.md (story #16)"
+profile_id: "general/short-description"
+profile_name: "Generic Short Description"
+module: "General"
+description: "Generates a concise, factual, channel-agnostic short description for
+  any photo asset. Intended as a reusable baseline for any distribution destination
+  that requires a brief plain-text description without channel-specific constraints."
+asset_types:
+  - photo
+created: "2026-10-01"
+last_updated: "2026-10-01"
+
+
+# =============================================================================
+# DIMENSION 1: AUDIENCE
+# =============================================================================
+
+audience:
+  primary: "Developers and systems integrating the Content Generation Layer into
+    any channel-agnostic workflow that requires a short factual description of a
+    photo asset."
+  use_context: "Generating a concise description for use in any downstream context
+    — DAM ingestion, internal review, preview labels, or as input to a channel-specific
+    layer — where a neutral, factual summary of the asset subject is required."
+
+
+# =============================================================================
+# DIMENSION 2: TONE
+# =============================================================================
+
+tone:
+  register: "factual"
+  style_notes: "Use active voice and present tense. Describe only what is visually
+    present or directly inferable from the asset. Do not use promotional or evaluative
+    adjectives (e.g. 'stunning', 'beautiful', 'perfect', 'amazing', 'breathtaking').
+    Do not include calls to action. Do not include subjective value judgements or
+    emotional language. Do not use first person."
+
+
+# =============================================================================
+# DIMENSION 3: REQUIRED AND OPTIONAL FIELDS
+# =============================================================================
+
+fields:
+  - name: description
+    required: true
+    purpose: "The sole output of this profile. A single, concise, factual plain-text
+      sentence or short phrase describing the primary subject, setting, and activity
+      visible in the photo."
+
+
+# =============================================================================
+# DIMENSION 4: LENGTH LIMITS
+# =============================================================================
+
+length_limits:
+  - field: description
+    unit: characters
+    min: 1
+    max: 150
+
+
+# =============================================================================
+# DIMENSION 5: KEYWORD RULES — NOT APPLICABLE
+# This profile does not produce a keyword field. The 'keywords' field is not
+# listed in the fields dimension above, so keyword rules do not apply.
+# Keyword generation for general use is covered by a separate story (story #31).
+# =============================================================================
+
+
+# =============================================================================
+# DIMENSION 6: FORBIDDEN CONTENT
+# =============================================================================
+
+forbidden_content:
+  terms:
+    - "stunning"
+    - "beautiful"
+    - "perfect"
+    - "amazing"
+    - "breathtaking"
+    - "gorgeous"
+    - "incredible"
+    - "spectacular"
+  content_types:
+    - "promotional language"
+    - "calls to action"
+    - "subjective value judgements"
+    - "emotional or aspirational language"
+  rationale: "This is a channel-agnostic factual profile. Promotional and evaluative
+    language is inappropriate for neutral metadata intended for reuse across multiple
+    downstream destinations."
+
+
+# =============================================================================
+# DIMENSION 7: LANGUAGE
+# =============================================================================
+
+language:
+  primary: "en-US"
+  # Multi-language output is deferred to a future story. No secondary locales
+  # are defined in this profile version.
+
+
+# =============================================================================
+# DIMENSION 8: OUTPUT FORMAT
+# =============================================================================
+
+output_format:
+  type: "json"
+  notes: "The value of the 'description' field is a single plain-text string.
+    No markdown formatting, no hashtags, and no inline keyword lists. The Channel
+    Adaptation Layer is responsible for embedding this value into its destination
+    format."
+
+
+# =============================================================================
+# DIMENSION 9: VALIDATION RULES
+# =============================================================================
+
+validation_rules:
+  - rule_id: "short-desc-required"
+    check: "Description field is present and non-empty."
+    field: description
+    condition: "description != empty"
+
+  - rule_id: "short-desc-max-length"
+    check: "Description does not exceed 150 characters."
+    field: description
+    condition: "description.length <= 150"
+
+  - rule_id: "short-desc-no-promotional"
+    check: "Description contains none of the prohibited promotional or evaluative terms."
+    field: description
+    condition: "description contains_none_of forbidden_content.terms"
+
+
+# =============================================================================
+# DIMENSION 10: APPROVAL REQUIREMENTS
+# =============================================================================
+
+approval_requirements:
+  human_review_required: false
+  notes: "This channel-agnostic profile requires no human review by default.
+    Downstream channel-specific profiles that consume this description as input
+    may impose their own approval requirements."
+
+
+# =============================================================================
+# AUTHORING NOTES — CAR SOURCE FIELDS
+# The Content Generation Layer (Layer 2) must draw on the following six CAR
+# fields when generating the short description. Fields are listed in priority
+# order; all six should be consulted where populated.
+#
+#   objects.primary_subject       — the main subject of the photo (Conditional)
+#   objects.scene_type            — the scene category, e.g. portrait, landscape
+#   location.environment_type     — indoor / outdoor / studio
+#   location.setting_descriptor   — specific setting, e.g. office, beach, forest
+#   persons.present               — whether people are present and their count
+#   activities.primary_activity   — the main action depicted (Conditional)
+#
+# Note: objects.primary_subject and activities.primary_activity are Conditional
+# fields in the CAR Field Catalogue. When neither is populated, the Content
+# Generation Layer must produce a valid description from the remaining source
+# fields. This fallback behaviour is an implementation decision for the Layer 2
+# implementation story and is not specified here.
+#
+# Field names use dot-notation consistent with docs/car-field-catalogue.md.
+# =============================================================================
+
+
+# =============================================================================
+# EXAMPLES
+# =============================================================================
+
+# --- Conformant example -------------------------------------------------------
+# Input asset: a photo of two people working at laptops in an open-plan office.
+#
+# Generated description:
+#   "Two people working at laptops in a modern open-plan office."
+#
+# Character count: 58 (≤ 150 — passes short-desc-max-length)
+# Language: en-US
+# Register: factual — describes what is visually present
+# No promotional adjectives, no calls to action, no value judgements
+# Status: CONFORMANT
+#
+# --- Non-conformant example 1 — exceeds max length ----------------------------
+# Generated description:
+#   "A person sitting at a wooden desk in a sunlit home office surrounded by
+#    houseplants, books, and a coffee mug, typing on a silver laptop computer."
+#
+# Character count: 155 (> 150 — fails short-desc-max-length)
+# Reason for non-conformance: description.length > 150
+# Status: NON-CONFORMANT
+#
+# --- Non-conformant example 2 — contains promotional language -----------------
+# Generated description:
+#   "A stunning golden sunset over a perfect beach with beautiful reflections
+#    on the water."
+#
+# Prohibited terms found: "stunning", "perfect", "beautiful"
+# Reason for non-conformance: fails short-desc-no-promotional
+# Status: NON-CONFORMANT
