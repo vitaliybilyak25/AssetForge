@@ -90,6 +90,14 @@ class TestFilenameRequired:
         r = validate_filename_required("photo.jpg")
         assert r.passed is True
 
+    def test_pass_whitespace_only_documents_known_behavior(self):
+        # Gap coverage: whitespace-only is truthy in Python so filename-required passes.
+        # filename-no-path catches it (no extension), blocking the row.
+        # This test locks the known behavior so a future change to strip()-check
+        # in filename-required does not silently break the existing contract.
+        r = validate_filename_required("   ")
+        assert r.passed is True  # by design; filename-no-path is the safety net
+
 
 class TestFilenameNoPath:
     def test_pass_bare_filename_with_extension(self):
@@ -189,6 +197,18 @@ class TestTitleSentenceCase:
         r = validate_title_sentence_case("Beautiful Sunset Over Ocean")
         assert not r.passed
         assert "3" in r.fix_suggestion  # 3 subsequent capitals
+
+    def test_fail_proper_noun_mid_sentence_documents_known_limitation(self):
+        # Gap coverage: the spec says proper nouns are exempted from sentence-case,
+        # but the regex cannot distinguish proper nouns from other capitalised words.
+        # 'Woman working in Paris studio' has 'Paris' (a proper noun) — the validator
+        # flags it as a violation. This is a known implementation limitation.
+        # The fix_suggestion text warns the human reviewer ("unless they are proper nouns").
+        # This test locks the current behavior; if proper-noun detection is added later
+        # this test must be updated to expect r.passed is True for genuine proper nouns.
+        r = validate_title_sentence_case("Woman working in Paris studio")
+        assert r.passed is False  # known limitation: proper noun flagged as violation
+        assert "proper nouns" in r.fix_suggestion
 
 
 class TestTitleNoBrandNames:
