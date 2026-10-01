@@ -1,0 +1,42 @@
+{
+  "_scenario": "C — Editorial photo (risk.editorial_only = true)",
+  "_story": "#88",
+  "objects": {
+    "primary_subject": "crowd of protesters",
+    "detected_subjects": ["protest signs", "crowd", "street", "police barrier", "city buildings", "banners"],
+    "scene_type": "news event crowd",
+    "colour_palette": ["orange", "yellow", "grey", "red"]
+  },
+  "persons": {
+    "present": true,
+    "faces_detected": true,
+    "count": null,
+    "group_composition": "large crowd",
+    "activity_posture": "marching, holding signs"
+  },
+  "location": {
+    "environment_type": "outdoor",
+    "setting_descriptor": "city street",
+    "urban_rural_signal": "urban"
+  },
+  "text": {
+    "logo_marks_detected": []
+  },
+  "activities": {
+    "primary_activity": "protest march",
+    "detected_activities": ["marching", "demonstrating", "holding signs"],
+    "editorial_event_signal": true
+  },
+  "risk": {
+    "flags_evaluated": true,
+    "model_release_required": true,
+    "editorial_only": true,
+    "confidence_score": 0.88
+  },
+  "confidence": {
+    "overall_score": 0.88,
+    "analysis_model_version": "ail-v0.1",
+    "analysis_timestamp": "2026-09-29T10:02:00Z",
+    "asset_quality_signal": "none"
+  }
+}

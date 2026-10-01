@@ -44,9 +44,9 @@ These fields are not one of the ten configurable dimensions; they are administra
 |---|---|---|---|---|---|
 | `schema_version` | string | Required | Shared | Identifies which version of this schema the profile conforms to; enables forward-compatible tooling. | Semver string, e.g. `"0.1"` |
 | `cross_reference` | string | Required | Shared | Links the profile back to the concept definition document and story number; provides traceability. | Free string, e.g. `"docs/content-profile.md (story #16)"` |
-| `profile_id` | string | Required | Shared | The Profile Identifier in `category/profile-name` format; the canonical name by which the Pipeline resolves this Content Profile. Category must be one of: `stock`, `marketing`, `web`, `commerce`, `library`. Both segments are lowercase and hyphen-separated. | `{category}/{profile-name}`, e.g. `stock/adobe-stock` |
+| `profile_id` | string | Required | Shared | The Profile Identifier in `category/profile-name` format; the canonical name by which the Pipeline resolves this Content Profile. Category must be one of: `stock`, `marketing`, `web`, `commerce`, `library`, `general`. Both segments are lowercase and hyphen-separated. | `{category}/{profile-name}`, e.g. `stock/adobe-stock` or `general/short-description` |
 | `profile_name` | string | Required | Shared | A human-readable display name for the profile; used in UI and reporting contexts. | Free string, e.g. `"Adobe Stock"` |
-| `module` | string | Required | Shared | The AssetForge module this profile belongs to. | One of: `StockForge`, `SocialForge`, `PortfolioForge`, `CommerceForge`, `ArchiveForge` |
+| `module` | string | Required | Shared | The AssetForge module this profile belongs to. | One of: `StockForge`, `SocialForge`, `PortfolioForge`, `CommerceForge`, `ArchiveForge`, `General` (for channel-agnostic profiles in `profiles/general/`) |
 | `description` | string | Required | Shared | A one- to two-sentence plain-language description of what this profile is for and which Distribution Destination it targets. | Free string |
 | `asset_types` | list of strings | Required | Shared | The Asset Types this profile supports processing. Determines which CAR fields are expected to be populated. | Any combination of: `photo`, `video`, `vector` |
 | `created` | string (date) | Required | Shared | The date this profile was first authored. | ISO 8601 date: `YYYY-MM-DD` |
@@ -334,7 +334,7 @@ The following table consolidates the shared-vs-channel-specific classification a
 ## Authoring Notes
 
 1. Every new Content Profile must conform to this schema. Any field marked Required must be present.
-2. Profile Identifiers must follow the `{category}/{profile-name}` format defined in `docs/design-principles.md`. The category must be one of: `stock`, `marketing`, `web`, `commerce`, `library`.
+2. Profile Identifiers must follow the `{category}/{profile-name}` format defined in `docs/design-principles.md`. The category must be one of: `stock`, `marketing`, `web`, `commerce`, `library`, `general`. The `general` category is for channel-agnostic, reusable profiles that are not tied to a specific distribution destination.
 3. The ten dimensions map directly to the ten configurable dimensions in `docs/content-profile.md` (story #16). If the concept document and this schema appear to conflict, raise the discrepancy with the Product Owner before authoring.
 4. Do not include Output Format or Validation Rules decisions in the Audience, Tone, or Keyword Rules fields. These cross-layer concerns are governed by the Boundary Contracts in `docs/boundary-contracts.md`.
 5. The YAML authoring template at `profiles/content-profile-template.yaml` provides a copy-and-fill starting point. Use that template; do not author profiles from a blank file.

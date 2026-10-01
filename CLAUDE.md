@@ -4,7 +4,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Status
 
-AssetForge is currently at **MVP0** — product vision and domain model stage. The codebase is being built from scratch. The primary reference is `Reqs/AssetForge_vision_01.docx`.
+AssetForge is currently at **MVP1/MVP2** — CAR specification complete, Adobe Stock profile spec complete, first implementation sprint (MVP2b) begins Sprint 6. The primary reference is `Reqs/AssetForge_vision_01.docx`.
+
+## Technology Stack
+
+**This is non-negotiable. Do not suggest alternatives.**
+
+| Layer | Technology |
+|---|---|
+| Agent framework | **Google ADK** (`google-adk` package — the newer ADK, not legacy SDKs) |
+| AI model | **Gemini** family (e.g. `gemini-2.0-flash`, `gemini-1.5-pro`) |
+| Language | **Python** |
+| Architecture | Multi-agent: one Orchestrator Agent calls sub-agents per layer |
+
+**Why Gemini ADK:** The project owner is using AssetForge as a hands-on learning project for Google Cloud / Gemini AI certification. Every implementation decision must reinforce ADK patterns (Agents, Tools, Runners, Sessions).
+
+**Never suggest:** Anthropic SDK, LangChain, OpenAI SDK, LlamaIndex, or any non-Gemini inference provider. The three AssetForge layers map directly to ADK Agents:
+- `AssetIntelligenceAgent` — Layer 1
+- `ContentGenerationAgent` — Layer 2
+- `ChannelAdaptationAgent` — Layer 3
+- `OrchestratorAgent` — coordinates the three layer agents
 
 ## What AssetForge Is
 
@@ -67,7 +86,7 @@ profiles/
 - **Profile-driven, not hardcoded per-site** — a Content Profile is the central abstraction; adding a new channel means adding a new profile, not new code.
 - **Stock marketplaces are the first use case, not the scope** — every architectural decision should support eventual expansion to all channel types.
 - **Planned output formats:** CSV, JSON, IPTC/XMP, REST API, CMS integration, filesystem export.
-- **Enterprise target:** MVP12 plans Gemini Enterprise Agent Platform deployment with secret management, governance, and observability.
+- **Enterprise target:** MVP12 plans Gemini Enterprise Agent Platform deployment with secret management, governance, and observability. This is the production-grade end state of the Gemini ADK architecture established at MVP2b.
 
 ## Reference
 

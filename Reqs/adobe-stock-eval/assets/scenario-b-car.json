@@ -1,0 +1,43 @@
+{
+  "_scenario": "B — Commercial photo with identifiable person (face visible)",
+  "_story": "#88",
+  "objects": {
+    "primary_subject": "woman",
+    "detected_subjects": ["standing desk", "laptop", "home office", "shelves", "plant", "window", "natural light"],
+    "scene_type": "lifestyle portrait",
+    "colour_palette": ["white", "grey", "green", "wood"]
+  },
+  "persons": {
+    "present": true,
+    "faces_detected": true,
+    "count": 1,
+    "age_range_signals": ["adult"],
+    "group_composition": "individual",
+    "activity_posture": "standing, facing camera"
+  },
+  "location": {
+    "environment_type": "indoor",
+    "setting_descriptor": "home office",
+    "urban_rural_signal": "urban"
+  },
+  "text": {
+    "logo_marks_detected": []
+  },
+  "activities": {
+    "primary_activity": "working at computer",
+    "detected_activities": ["typing", "working", "standing"],
+    "editorial_event_signal": false
+  },
+  "risk": {
+    "flags_evaluated": true,
+    "model_release_required": true,
+    "editorial_only": false,
+    "confidence_score": 0.91
+  },
+  "confidence": {
+    "overall_score": 0.91,
+    "analysis_model_version": "ail-v0.1",
+    "analysis_timestamp": "2026-09-29T10:01:00Z",
+    "asset_quality_signal": "none"
+  }
+}

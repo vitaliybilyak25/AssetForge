@@ -1,0 +1,38 @@
+{
+  "_scenario": "D — Commercial photo with visible logo (risk.trademark_flag = true)",
+  "_story": "#88",
+  "objects": {
+    "primary_subject": "laptop computer",
+    "detected_subjects": ["wooden desk", "coffee mug", "notebook", "pen", "office chair", "sunlight"],
+    "scene_type": "workspace still life",
+    "colour_palette": ["silver", "brown", "white", "black"]
+  },
+  "persons": {
+    "present": false
+  },
+  "location": {
+    "environment_type": "indoor",
+    "setting_descriptor": "office desk",
+    "urban_rural_signal": "urban"
+  },
+  "text": {
+    "logo_marks_detected": ["Apple logo"]
+  },
+  "activities": {
+    "primary_activity": null,
+    "detected_activities": [],
+    "editorial_event_signal": false
+  },
+  "risk": {
+    "flags_evaluated": true,
+    "trademark_flag": true,
+    "editorial_only": false,
+    "confidence_score": 0.93
+  },
+  "confidence": {
+    "overall_score": 0.93,
+    "analysis_model_version": "ail-v0.1",
+    "analysis_timestamp": "2026-09-29T10:03:00Z",
+    "asset_quality_signal": "none"
+  }
+}

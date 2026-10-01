@@ -1,0 +1,43 @@
+{
+  "_scenario": "E — Commercial photo with recognisable scene and primary activity (tests category resolution and keyword depth)",
+  "_story": "#88",
+  "objects": {
+    "primary_subject": "chef",
+    "detected_subjects": ["cooking pot", "stove", "cutting board", "knife", "vegetables", "professional kitchen equipment", "apron", "toque"],
+    "scene_type": "professional kitchen",
+    "colour_palette": ["white", "silver", "orange", "green"]
+  },
+  "persons": {
+    "present": true,
+    "faces_detected": false,
+    "count": 1,
+    "age_range_signals": ["adult"],
+    "group_composition": "individual",
+    "activity_posture": "standing, back to camera, actively working"
+  },
+  "location": {
+    "environment_type": "indoor",
+    "setting_descriptor": "professional restaurant kitchen",
+    "urban_rural_signal": "urban"
+  },
+  "text": {
+    "logo_marks_detected": []
+  },
+  "activities": {
+    "primary_activity": "cooking",
+    "detected_activities": ["cooking", "food preparation", "stirring", "plating"],
+    "editorial_event_signal": false
+  },
+  "risk": {
+    "flags_evaluated": true,
+    "model_release_required": true,
+    "editorial_only": false,
+    "confidence_score": 0.89
+  },
+  "confidence": {
+    "overall_score": 0.89,
+    "analysis_model_version": "ail-v0.1",
+    "analysis_timestamp": "2026-09-29T10:04:00Z",
+    "asset_quality_signal": "none"
+  }
+}
