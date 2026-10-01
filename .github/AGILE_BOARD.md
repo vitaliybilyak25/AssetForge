@@ -37,6 +37,7 @@ Estimation is set during Sprint Planning. Stories must be estimated before movin
 | `blocked` | Waiting on a dependency or decision |
 | `agent:ba` | Business Analyst should refine |
 | `agent:dev` | Developer (default Copilot / Cursor) should implement |
+| `agent:pr-review` | PR Reviewer should review the open PR before tester picks up |
 | `agent:qa` | Tester should verify or add tests |
 
 ## Ready checklist
@@ -69,7 +70,11 @@ All sprint issues must be **assigned** to a team member when the sprint starts.
 ## Handoff
 
 ```
-BA or PO draft → you approve → label ready + set Status Ready + assign → developer or tester picks up
+BA or PO draft → you approve → label ready + set Status Ready + assign
+  → developer implements + opens PR + labels agent:pr-review
+  → PR Reviewer reviews PR (must pass before tester)
+  → label agent:qa → tester verifies AC
+  → set Status In Review → you accept increment
 ```
 
 No agent assigns another agent without your trigger. No agent reorders the backlog or accepts a sprint.
@@ -90,4 +95,5 @@ No agent assigns another agent without your trigger. No agent reorders the backl
 | Business Analyst | Briefs, AC, RICE, process maps | Write production code |
 | Scrum Master | Ceremony notes, blocker list, board hygiene | Invent scope or assign work |
 | Developer | Implement one ready issue, open a PR | Merge to main or expand scope |
-| Tester | Tests, AC verification, review comments | Change product behavior to make tests pass |
+| PR Reviewer | Review open PR for correctness, architecture, security, test coverage; recommend approve / request changes / block | Merge, approve via GitHub, or change production code |
+| Tester | Tests, AC verification, review comments | Change product behavior to make tests pass; pick up a story before PR Reviewer has approved |
