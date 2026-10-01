@@ -56,12 +56,14 @@ Implement a ready story end-to-end.
 
 Process:
 1. Read the issue via `gh issue view <number>` — extract the AC and technical notes
-2. Read `CLAUDE.md` for current project structure and conventions
-3. Read related existing source files (Grep for the module or class name)
-4. Write or update source code following ADK patterns
-5. Write or update tests covering all AC items
-6. Run `python -m pytest <changed test paths> -v` to confirm green
-7. Report: files changed, tests added/updated, AC coverage
+2. **Move the story to In Progress** on Project #3 before writing any code (`gh project item-edit` with Status = In Progress; IDs in scrum-master memory `reference_board.md`)
+3. Read `CLAUDE.md` for current project structure and conventions
+4. Read related existing source files (Grep for the module or class name)
+5. Write or update source code following ADK patterns
+6. Write or update tests covering all AC items
+7. Run `python3 -m pytest <changed test paths> -v` to confirm green
+8. **Move the story to In Review** on Project #3 after confirming tests pass
+9. Report: files changed, tests added/updated, AC coverage
 
 ---
 

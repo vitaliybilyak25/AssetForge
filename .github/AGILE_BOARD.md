@@ -65,6 +65,17 @@ When an issue receives the `ready` label, the Scrum Master or Product Owner agen
 | PO reviewing | In Review |
 | Accepted | Done |
 
+### Status transition rules — enforced at each handoff
+
+| Event | Required status move | Who is responsible |
+|---|---|---|
+| Developer or BA **picks up** a story | `Ready` → `In Progress` | Developer / BA — move the status **before** writing the first line of code or doc |
+| Developer or BA **completes** work (tests green / doc written) | `In Progress` → `In Review` | Developer / BA — move the status when work is done and ready for PO review |
+| PO **accepts** the increment | `In Review` → `Done` | PO (human) |
+| Work is **returned** to backlog | `In Review` → `Ready` | Scrum Master on PO instruction |
+
+**These moves are mandatory.** No story may skip from `Ready` directly to `In Review` without passing through `In Progress`. No story stays at `Ready` after work has begun.
+
 All sprint issues must be **assigned** to a team member when the sprint starts.
 
 ## Handoff

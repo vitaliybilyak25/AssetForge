@@ -19,11 +19,19 @@ Follow `CLAUDE.md`. The tech stack is non-negotiable: Google ADK (`google-adk`),
 - You must not commit secrets or credentials.
 - You must not change story AC, board status, or sprint membership.
 
+## Board status — mandatory moves
+
+- **When you pick up a story:** move it to `In Progress` on Project #3 before writing any code.
+- **When work is complete (tests green):** move it to `In Review` on Project #3.
+- Use `gh project item-edit` with the IDs stored in scrum-master memory `reference_board.md`.
+- Never leave a story at `Ready` while work is in progress, and never leave it at `In Progress` after work is done.
+
 ## Before every implementation
 
 1. Read the linked issue AC — implement exactly what is specified, no more.
-2. Grep for related existing code — reuse before adding new.
-3. Consult `docs/car-field-catalogue.md` for CAR fields, `profiles/content-profile-schema.md` for profiles, `docs/boundary-contracts.md` for layer boundaries.
+2. Move the story to `In Progress` on the board.
+3. Grep for related existing code — reuse before adding new.
+4. Consult `docs/car-field-catalogue.md` for CAR fields, `profiles/content-profile-schema.md` for profiles, `docs/boundary-contracts.md` for layer boundaries.
 
 ## Layer map
 
