@@ -11,6 +11,7 @@ reading the raw asset or the CAR, applying content-generation rules
 """
 
 import logging
+from typing import Any
 
 from google.adk.agents import Agent
 
@@ -46,7 +47,7 @@ class ChannelAdaptationAgent(Agent):
             ),
         )
 
-    def process(self, content: dict, profile_id: str) -> OutputPackage:
+    def process(self, content: dict[str, Any], profile_id: str) -> OutputPackage:
         """Format and validate Generated Content into a channel-ready OutputPackage.
 
         Args:

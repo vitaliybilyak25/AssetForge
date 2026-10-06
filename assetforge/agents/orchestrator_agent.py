@@ -11,6 +11,7 @@ coordination flows exclusively through this OrchestratorAgent.
 import logging
 
 from google.adk.agents import Agent
+from pydantic import PrivateAttr
 
 from assetforge.agents.asset_intelligence_agent import AssetIntelligenceAgent
 from assetforge.agents.content_generation_agent import ContentGenerationAgent
@@ -34,7 +35,15 @@ class OrchestratorAgent(Agent):
     No layer agent calls any other layer agent directly; all coordination flows here.
     """
 
+    # PrivateAttr keeps typed refs to the sub-agents without Pydantic wiping them.
+    _layer1: AssetIntelligenceAgent = PrivateAttr()
+    _layer2: ContentGenerationAgent = PrivateAttr()
+    _layer3: ChannelAdaptationAgent = PrivateAttr()
+
     def __init__(self) -> None:
+        layer1 = AssetIntelligenceAgent()
+        layer2 = ContentGenerationAgent()
+        layer3 = ChannelAdaptationAgent()
         super().__init__(
             name="orchestrator_agent",
             model="gemini-2.0-flash",
@@ -48,16 +57,12 @@ class OrchestratorAgent(Agent):
                 "Content Generation Agent with the resulting CAR and profile, then call the "
                 "Channel Adaptation Agent to produce the final Output Package."
             ),
-            sub_agents=[
-                AssetIntelligenceAgent(),
-                ContentGenerationAgent(),
-                ChannelAdaptationAgent(),
-            ],
+            sub_agents=[layer1, layer2, layer3],
         )
-        # Keep typed references to sub-agents for direct process() calls in run().
-        self._layer1 = AssetIntelligenceAgent()
-        self._layer2 = ContentGenerationAgent()
-        self._layer3 = ChannelAdaptationAgent()
+        # Assign after super().__init__() so Pydantic does not wipe the values.
+        self._layer1 = layer1
+        self._layer2 = layer2
+        self._layer3 = layer3
 
     def run(self, asset_path: str, profile_id: str) -> OutputPackage:
         """Execute the full three-layer pipeline for one asset.

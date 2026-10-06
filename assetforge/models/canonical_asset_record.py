@@ -9,7 +9,7 @@ titles, descriptions, keywords, or any content shaped by a Content Profile.
 from dataclasses import dataclass, field
 
 
-@dataclass
+@dataclass(frozen=True)
 class CanonicalAssetRecord:
     """Immutable record of factual, channel-agnostic asset observations (Layer 1 output).
 
